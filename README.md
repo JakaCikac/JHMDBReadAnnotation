@@ -43,4 +43,7 @@ The program requires two arguments.
 	
 ####TESTING
 There is an example provided in the data/ folder. You can use the "Goal_Keeping_Tips_catch_f_cm_np1_fr_med_2.avi" video file as the first argument and it's corresponding annotations "joint_positions.yaml" as the second argument to the program.
-A window containing the video frame 1 should show up with the joint annotations for the first frame drawn on top as red circles as in the ![Example image](/ReadJHMDBAnnotations/data/example_image/example.png). Use any key to proceed to the next frame. 
+A window containing the video frame 1 should show up with the joint annotations for the first frame drawn on top as red circles as in the example image. Use any key to proceed to the next frame. 
+
+#####Example Image
+![Example image](/ReadJHMDBAnnotations/data/example_image/example.png)
