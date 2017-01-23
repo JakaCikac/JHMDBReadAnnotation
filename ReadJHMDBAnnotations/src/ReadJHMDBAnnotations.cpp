@@ -25,7 +25,6 @@ using namespace cv;
 using namespace std;
 
 vector<Mat> readJointPositions(string yaml_file) {
-
     // Initialize file storage reader.
     FileStorage fsReader( yaml_file, FileStorage::READ);
 

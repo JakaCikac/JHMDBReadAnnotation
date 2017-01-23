@@ -1,5 +1,6 @@
 % =========================================================================
-%   This script runs the Matlab2OpenCV.m for the JHMDB joint_positions.mat
+%   This script runs the Matlab2OpenCV.m for the joint_positions.mat of
+%   my DA2017 dataset,
 %   conversion, first into a YAML file, that the C++ program can then read.
 %   
 %   First part of the script shows how to convert a single
@@ -31,14 +32,14 @@
 
 tic;
 % Set to 1 if you want to run for a single file and adjust the path!
-run_single_file = 1;
+run_single_file = 0;
 % Set to 1 if you want to run for multiple subfolders, recursively.
-run_recursively = 0;
+run_recursively = 1;
 % Don't forget to adjust the paths!!
 %  the subfolders contain joint_positions.mat (as in JHMDB)
 addpath('./Enhanced_rdir/');
-%jhmdb_joint_position_folder = '/Users/natrixanorax/Documents/JHMDB/joint_positions/';
-%jhmdb_joint_position_folder = '/Users/natrixanorax/Documents/JHMDB/estimated_joint_positions/';
+
+jhmdb_joint_position_folder = '/Users/natrixanorax/Documents/masters_videos/splits_annotated_part1/';
 
 %% Load s single joint_positions.mat file and convert it to yaml,
 %  that the C++ program can read.
@@ -87,17 +88,19 @@ if run_recursively
         load(d2(i).name);
         % Extract only the path.
         [pathstr, name, ext] = fileparts(d2(i).name);
+        [pathstr2, name2, ext2] = fileparts(name);
         count = sprintf('(%d / %d)', i, numall);
-        disp(['Working on ', count, ' : ', d2(i).name]);
+        disp(['Working on ', count, ' : ', name2]);
 
         % Get the sizes of the variable we are interested in:
-        [rows cols frames] = size(pos_img);
+        [rows cols frames] = size(predictionMat);
 
         % Define a temporary 2x15 matrix.
         frame = zeros(rows, cols);
 
         % Check if the yaml file exists already and delete it.
-        outputFilename = 'joint_positions.yaml';
+        %outputFilename = [d2(i).name, '_joints.yaml'];
+        outputFilename = [name2, '.yaml' ];
 
         if exist(outputFilename, 'file') == 2
            delete(outputFilename);
@@ -106,24 +109,13 @@ if run_recursively
         % Write frames to YAML, frame by frame (since !!opencv-matrix type only 
         % supports 2D)
         for i = 1:frames
-            frame = pos_img(:,:,i);
+            frame = predictionMat(:,:,i);
             Matlab2OpenCV(frame, [pathstr, '/', outputFilename], 'a', i, frames);
         end
 
         % clear currently loaded joint_positions.mat file
-        clear pos_img
-        clear pos_world
+
     end
 % =========================================================================
 end
 toc;
-
-
-
-
-
-
-
-
-
-
