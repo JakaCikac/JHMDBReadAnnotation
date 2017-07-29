@@ -39,7 +39,7 @@ run_recursively = 1;
 %  the subfolders contain joint_positions.mat (as in JHMDB)
 addpath('./Enhanced_rdir/');
 
-jhmdb_joint_position_folder = '/Users/natrixanorax/Documents/masters_videos/splits_annotated_part1/';
+jhmdb_joint_position_folder = '/Users/natrixanorax/Documents/masters_videos/datasets/';
 
 %% Load s single joint_positions.mat file and convert it to yaml,
 %  that the C++ program can read.
@@ -101,9 +101,11 @@ if run_recursively
         % Check if the yaml file exists already and delete it.
         %outputFilename = [d2(i).name, '_joints.yaml'];
         outputFilename = [name2, '.yaml' ];
+        
+        fullFileName = [pathstr, '/', name2, '.yaml'];
 
-        if exist(outputFilename, 'file') == 2
-           delete(outputFilename);
+        if exist(fullFileName, 'file') == 2
+           delete(fullFileName);
         end
 
         % Write frames to YAML, frame by frame (since !!opencv-matrix type only 
